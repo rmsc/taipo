@@ -7,12 +7,21 @@ edition = "2018"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [features]
-default = [
+default = ["wasm"]
+
+# common bevy features
+bevy_common = [
   "bevy/bevy_gltf",
   "bevy/bevy_winit",
   "bevy/render",
   "bevy/png",
 ]
+
+# wasm features
+wasm = ["bevy_tiled_prototype/web", "getrandom/wasm-bindgen", "bevy_common"]
+
+# native features
+native = ["bevy/bevy_wgpu", "bevy_common"]
 
 [dependencies]
 #bevy = { version = "0.4", default-features = false}
@@ -20,8 +29,8 @@ default = [
 #bevy = { git = "https://github.com/bevyengine/bevy/", rev="7be096a254e86bd6388d96ea10b56b9ed6210685", default-features=false }
 bevy = { git = "https://github.com/rparrett/bevy/", rev="bc4fe9b186db3f32eef38fc4241289df480fa949", default-features=false }
 
-bevy_tiled_prototype = { git = "https://github.com/rparrett/bevy_tiled", rev="c9292e5aa9cc3252d27a6ad470e74a9937b19da3", default-features=false, features=["web"] }
-#bevy_tiled_prototype = { path = "../bevy_tiled", default-features=false, features=["web"] }
+bevy_tiled_prototype = { git = "https://github.com/rparrett/bevy_tiled", rev="c9292e5aa9cc3252d27a6ad470e74a9937b19da3", default-features=false }
+#bevy_tiled_prototype = { path = "../bevy_tiled", default-features=false }
 
 bevy_asset_ron = { git = "https://github.com/jamadazi/bevy_asset_ron/", rev="a40e9b17af783e588cc94409e37324d87c2d17dd" }
 
@@ -30,7 +39,7 @@ bevy_kira_audio = { git = "https://github.com/rparrett/bevy_kira_audio", rev="6b
 #bevy_kira_audio = { path = "../bevy_kira_audio", features=["wav"] }
 
 rand = { version = "0.8" }
-getrandom = { version = "0.1", features = ["wasm-bindgen"] }
+getrandom = "0.1"
 serde = {version = "1", features = ["derive"]}
 nom = "6.0"
 anyhow = "1.0"
