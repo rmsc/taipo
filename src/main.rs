@@ -1507,8 +1507,8 @@ fn check_spawn(
 }
 
 fn main() {
-    App::build()
-        .insert_resource(ReportExecutionOrderAmbiguities {})
+    let mut app = App::build();
+    app.insert_resource(ReportExecutionOrderAmbiguities {})
         // Make bevy_webgl2 shut up
         .insert_resource(LogSettings {
             filter: "bevy_webgl2=warn".into(),
@@ -1517,6 +1517,7 @@ fn main() {
         .insert_resource(WindowDescriptor {
             width: 720.,
             height: 480.,
+            #[cfg(target_arch = "wasm32")]
             canvas: Some("#bevy-canvas".to_string()),
             ..Default::default()
         })
@@ -1526,9 +1527,12 @@ fn main() {
             TaipoStage::State,
             StateStage::<TaipoState>::default(),
         )
-        .add_plugins(DefaultPlugins)
-        .add_plugin(bevy_webgl2::WebGL2Plugin)
-        .add_plugin(bevy_tiled_prototype::TiledMapPlugin)
+        .add_plugins(DefaultPlugins);
+
+    #[cfg(target_arch = "wasm32")]
+    app.add_plugin(bevy_webgl2::WebGL2Plugin);
+
+    app.add_plugin(bevy_tiled_prototype::TiledMapPlugin)
         .insert_resource(AudioInitialization {
             needed: false,
             ..Default::default()
