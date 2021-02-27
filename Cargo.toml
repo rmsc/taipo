@@ -20,10 +20,6 @@ default = [
 #bevy = { git = "https://github.com/bevyengine/bevy/", rev="7be096a254e86bd6388d96ea10b56b9ed6210685", default-features=false }
 bevy = { git = "https://github.com/rparrett/bevy/", rev="bc4fe9b186db3f32eef38fc4241289df480fa949", default-features=false }
 
-#bevy_webgl2 = { version = "0.4.0" }
-#bevy_webgl2 = { path = "../bevy_webgl2" }
-bevy_webgl2 = { git = "https://github.com/mrk-its/bevy_webgl2", rev="b5e842e421be56af9e69ababdaeb028b05c5b7a2" }
-
 bevy_tiled_prototype = { git = "https://github.com/rparrett/bevy_tiled", rev="c9292e5aa9cc3252d27a6ad470e74a9937b19da3", default-features=false, features=["web"] }
 #bevy_tiled_prototype = { path = "../bevy_tiled", default-features=false, features=["web"] }
 
@@ -39,6 +35,11 @@ serde = {version = "1", features = ["derive"]}
 nom = "6.0"
 anyhow = "1.0"
 ron = "0.6.4"
+
+[target.'cfg(target_arch = "wasm32")'.dependencies]
+#bevy_webgl2 = { version = "0.4.0" }
+#bevy_webgl2 = { path = "../bevy_webgl2" }
+bevy_webgl2 = { git = "https://github.com/mrk-its/bevy_webgl2", rev="b5e842e421be56af9e69ababdaeb028b05c5b7a2" }
 
 [patch.crates-io]
 #bevy = { git = "https://github.com/bevyengine/bevy/", rev="1ca8ce4a799af8dab2d926366de9ac3c8d30939c", default-features=false }
